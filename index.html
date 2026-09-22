@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Developer Dashboard</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231f2328' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='3' width='18' height='18' rx='3'/%3E%3Cpath d='M3 9h18M9 21V9'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    // Apply a saved theme before the page paints so there is no flash.
+    try {
+      var savedTheme = localStorage.getItem('dashboard-theme');
+      if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+    } catch (e) { /* localStorage unavailable; fall back to system theme */ }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="topbar">
+    <div class="topbar-left">
+      <span class="logo-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg>
+      </span>
+      <!-- Main dashboard heading -->
+      <h1>Developer Dashboard</h1>
+      <span class="pill pill-env"><span class="dot dot-warn" aria-hidden="true"></span>staging</span>
+    </div>
+    <div class="topbar-right">
+      <button id="theme-toggle" class="icon-button" type="button" aria-label="Toggle dark mode" aria-pressed="false">
+        <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <span class="avatar" title="Developer" aria-hidden="true">D</span>
+    </div>
+  </header>
+
+  <div class="shell">
+
+    <nav class="rail" aria-label="Sections">
+      <a class="nav-row is-selected" href="#main">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+        Overview
+      </a>
+      <a class="nav-row" href="#projects">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+        Projects
+      </a>
+      <a class="nav-row" href="#release">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.6 3.4a10 10 0 0 0-9.2 6.3L9 11l-4 1 4 4 1-4 1.3-2.4a10 10 0 0 0 6.3-9.2z"/><path d="M5 19l3-3"/></svg>
+        Releases
+      </a>
+      <a class="nav-row" href="#activity">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>
+        Activity
+      </a>
+      <div class="rail-spacer"></div>
+      <a class="nav-row" href="#">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+        Settings
+      </a>
+    </nav>
+
+    <main id="main" class="content">
+
+      <div class="page-header">
+        <div>
+          <h2>Welcome back, Developer</h2>
+          <p class="subtle"><span id="today-date">Today</span> · Here's what's happening across your team.</p>
+        </div>
+        <span class="pill">Sprint 24 · ends in 5 days</span>
+      </div>
+
+      <section class="panel" aria-labelledby="sprint-heading">
+        <div class="panel-header">
+          <h2 id="sprint-heading">Current Sprint</h2>
+          <span class="subtle">74% of points completed</span>
+        </div>
+        <div class="stats">
+          <div class="stat">
+            <span class="stat-value">12</span>
+            <span class="stat-label">Open Issues</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">34</span>
+            <span class="stat-label">Completed</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">6</span>
+            <span class="stat-label">Team Members</span>
+          </div>
+        </div>
+        <div class="progress" role="progressbar" aria-label="Sprint progress" aria-valuenow="74" aria-valuemin="0" aria-valuemax="100">
+          <div class="progress-fill" style="width: 74%"></div>
+        </div>
+      </section>
+
+      <div class="grid-2">
+
+        <section id="release" class="panel" aria-labelledby="release-heading">
+          <div class="panel-header">
+            <h2 id="release-heading">Upcoming Release</h2>
+            <span class="pill"><span class="dot dot-accent" aria-hidden="true"></span>Scheduled</span>
+          </div>
+          <!-- Release information -->
+          <div class="release">
+            <p class="release-name">Developer Dashboard</p>
+            <p class="release-version">Version 0.8</p>
+            <p class="release-date">January 15, 2024</p>
+          </div>
+        </section>
+
+        <section class="panel" aria-labelledby="links-heading">
+          <div class="panel-header">
+            <h2 id="links-heading">Quick Links</h2>
+          </div>
+          <!-- Quick links -->
+          <ul class="links">
+            <li><a href="https://github.com" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="https://discord.com" target="_blank" rel="noopener">Team Chat</a></li>
+            <li><a href="https://github.com/features/actions" target="_blank" rel="noopener">CI Pipeline</a></li>
+          </ul>
+        </section>
+
+      </div>
+
+      <section id="projects" class="panel" aria-labelledby="projects-heading">
+        <div class="panel-header">
+          <h2 id="projects-heading">Active Projects</h2>
+          <span class="subtle">Statuses: Planning · Development · Testing · Complete</span>
+        </div>
+        <!-- Active project cards -->
+        <div class="projects">
+
+          <article class="project">
+            <h3>Website Redesign</h3>
+            <p>Refreshing the public site with the new design system.</p>
+            <span class="status">Testing</span>
+          </article>
+
+          <article class="project">
+            <h3>API Monitor</h3>
+            <p>Uptime and latency tracking for internal services.</p>
+            <span class="status">Development</span>
+          </article>
+
+          <article class="project">
+            <h3>Onboarding Portal</h3>
+            <p>Self-serve setup guide for new team members.</p>
+            <span class="status">Planning</span>
+          </article>
+
+        </div>
+      </section>
+
+      <section id="activity" class="panel" aria-labelledby="activity-heading">
+        <div class="panel-header">
+          <h2 id="activity-heading">Recent Activity</h2>
+        </div>
+        <ul class="activity">
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 21V9a9 9 0 0 0 9 9"/></svg>
+            <p><strong>Sam Okafor</strong> merged a pull request <span class="ref">Add uptime chart to API Monitor</span></p>
+            <time>2h ago</time>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.5"/></svg>
+            <p><strong>Jordan Lee</strong> opened an issue <span class="ref">Release card still shows last sprint's info</span></p>
+            <time>4h ago</time>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+            <p><strong>Priya Natarajan</strong> reviewed a pull request <span class="ref">Standardize project status labels</span></p>
+            <time>1d ago</time>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.5"/><path d="M1.5 12h7M15.5 12h7"/></svg>
+            <p><strong>Chris Alvarez</strong> pushed 3 commits to <code>feature/notification-center</code></p>
+            <time>1d ago</time>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.7l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.7l7 4a2 2 0 0 0 2 0l7-4a2 2 0 0 0 1-1.7z"/><path d="M3.3 7l8.7 5 8.7-5M12 22V12"/></svg>
+            <p><strong>deploy-bot</strong> deployed build <code>#482</code> to staging</p>
+            <time>2d ago</time>
+          </li>
+        </ul>
+      </section>
+
+      <footer class="footer">
+        <span class="subtle">Internal tool · Built for the ACM @ UMD Git &amp; GitHub Workshop</span>
+      </footer>
+
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
